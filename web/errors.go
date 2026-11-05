@@ -1,7 +1,7 @@
 package web
 
 import (
-	"goat/errs"
+	"github.com/bigphu/goat/errs"
 	"net/http"
 )
 

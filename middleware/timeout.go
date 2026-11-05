@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // ReadTimeout đổi hạn đọc request (gồm body) của route thành d, tính từ lúc

@@ -19,7 +19,7 @@ import (
 	"github.com/caarlos0/env/v11"
 	"github.com/go-chi/chi/v5"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 var discard = slog.New(slog.NewTextHandler(io.Discard, nil))

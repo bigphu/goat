@@ -8,7 +8,7 @@ import (
 	"github.com/caarlos0/env/v11"
 	"github.com/riverqueue/river"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // Logger truyền vào là logger River dùng; nil thì slog.Default() (đọc lúc dựng)

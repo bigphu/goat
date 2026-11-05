@@ -4,7 +4,7 @@ import (
 	"context"
 	"log/slog"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // logSender không gửi gì, chỉ in thư ra log ở mức WARN. Thân thư thường chứa

@@ -12,10 +12,10 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 
-	"goat/auth"
-	"goat/database"
-	"goat/database/dbtest"
-	"goat/jobs"
+	"github.com/bigphu/goat/auth"
+	"github.com/bigphu/goat/database"
+	"github.com/bigphu/goat/database/dbtest"
+	"github.com/bigphu/goat/jobs"
 )
 
 func newOutbox(t *testing.T, pool *pgxpool.Pool, r *Registry) *Outbox {

@@ -8,8 +8,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/riverqueue/river"
 
-	"goat/auth"
-	"goat/events/db"
+	"github.com/bigphu/goat/auth"
+	"github.com/bigphu/goat/events/db"
 )
 
 // Outbox ghi event cùng transaction với thay đổi sinh ra nó (transactional

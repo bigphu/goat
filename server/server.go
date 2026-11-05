@@ -11,8 +11,8 @@ import (
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"
 
-	"goat/middleware"
-	"goat/web"
+	"github.com/bigphu/goat/middleware"
+	"github.com/bigphu/goat/web"
 )
 
 type Server struct {

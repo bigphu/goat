@@ -9,8 +9,8 @@ import (
 
 	"golang.org/x/time/rate"
 
-	"goat/errs"
-	"goat/web"
+	"github.com/bigphu/goat/errs"
+	"github.com/bigphu/goat/web"
 )
 
 // ErrRateLimited: client gửi quá nhanh; header Retry-After nói phải chờ bao lâu

@@ -12,9 +12,9 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/riverqueue/river"
 
-	"goat/auth"
-	"goat/events/db"
-	"goat/jobs"
+	"github.com/bigphu/goat/auth"
+	"github.com/bigphu/goat/events/db"
+	"github.com/bigphu/goat/jobs"
 )
 
 // fakeDB thay Postgres cho GetEvent: QueryRow trả row (hoặc lỗi) cố định

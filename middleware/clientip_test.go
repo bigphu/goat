@@ -7,7 +7,7 @@ import (
 	"net/netip"
 	"testing"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 func TestClientIP(t *testing.T) {

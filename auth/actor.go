@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"goat/errs"
+	"github.com/bigphu/goat/errs"
 )
 
 // Actor là người (hoặc hệ thống) đang thực hiện thao tác

@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"goat/errs"
-	"goat/logger"
-	"goat/web"
+	"github.com/bigphu/goat/errs"
+	"github.com/bigphu/goat/logger"
+	"github.com/bigphu/goat/web"
 )
 
 // Recoverer bắt panic trong handler, log kèm stack rồi trả 500 problem+json.

@@ -10,8 +10,8 @@ import (
 
 	chimw "github.com/go-chi/chi/v5/middleware"
 
-	"goat/errs"
-	"goat/logger"
+	"github.com/bigphu/goat/errs"
+	"github.com/bigphu/goat/logger"
 )
 
 // WriteProblem trả err về client dạng problem+json. Lỗi 5xx được log kèm

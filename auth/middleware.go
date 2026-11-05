@@ -7,10 +7,10 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"goat/errs"
-	"goat/jwt"
-	"goat/logger"
-	"goat/web"
+	"github.com/bigphu/goat/errs"
+	"github.com/bigphu/goat/jwt"
+	"github.com/bigphu/goat/logger"
+	"github.com/bigphu/goat/web"
 )
 
 var (

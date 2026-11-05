@@ -8,8 +8,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 
-	"goat/database"
-	"goat/database/dbtest"
+	"github.com/bigphu/goat/database"
+	"github.com/bigphu/goat/database/dbtest"
 )
 
 type testArgs struct {

@@ -11,7 +11,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // newRouter dựng router với thứ tự middleware như app thật, log ra buf

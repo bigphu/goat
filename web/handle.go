@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"goat/errs"
+	"github.com/bigphu/goat/errs"
 )
 
 type HandlerFunc func(http.ResponseWriter, *http.Request) error

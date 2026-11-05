@@ -13,7 +13,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // Server có ReadTimeout ngắn; route upload nới ra bằng ReadTimeout để client

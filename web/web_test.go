@@ -12,8 +12,8 @@ import (
 	"strings"
 	"testing"
 
-	"goat/errs"
-	"goat/logger"
+	"github.com/bigphu/goat/errs"
+	"github.com/bigphu/goat/logger"
 )
 
 type address struct {

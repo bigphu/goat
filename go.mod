@@ -1,4 +1,4 @@
-module goat
+module github.com/bigphu/goat
 
 go 1.26.0
 

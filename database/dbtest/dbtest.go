@@ -30,8 +30,8 @@ import (
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 
-	"goat/database"
-	"goat/migrations"
+	"github.com/bigphu/goat/database"
+	"github.com/bigphu/goat/migrations"
 )
 
 // Cùng bản với compose.yml

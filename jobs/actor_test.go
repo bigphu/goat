@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/riverqueue/river/rivertype"
 
-	"goat/auth"
+	"github.com/bigphu/goat/auth"
 )
 
 func TestActorArgsFrom(t *testing.T) {

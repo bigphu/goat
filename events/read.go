@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"goat/events/db"
+	"github.com/bigphu/goat/events/db"
 )
 
 // ListForAggregate đọc event của một aggregate, mới nhất trước (occurred_at, id giảm dần).

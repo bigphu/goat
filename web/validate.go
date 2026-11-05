@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/bigphu/goat/errs"
 	"github.com/go-playground/validator/v10"
-	"goat/errs"
 )
 
 // Một validator dùng chung cho cả backend

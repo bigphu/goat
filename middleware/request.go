@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // RequestLogger gắn request_id vào ctx cho mọi log phía sau, rồi ghi một dòng

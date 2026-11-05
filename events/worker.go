@@ -11,9 +11,9 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 
-	"goat/events/db"
-	"goat/jobs"
-	"goat/logger"
+	"github.com/bigphu/goat/events/db"
+	"github.com/bigphu/goat/jobs"
+	"github.com/bigphu/goat/logger"
 )
 
 // HandleEventArgs là job giao một event cho một subscriber. Mỗi subscriber

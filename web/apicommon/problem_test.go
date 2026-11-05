@@ -7,9 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"goat/errs"
-	"goat/web"
-	"goat/web/apicommon"
+	"github.com/bigphu/goat/errs"
+	"github.com/bigphu/goat/web"
+	"github.com/bigphu/goat/web/apicommon"
 )
 
 // Body lỗi server thật sự gửi (web.RenderProblem) phải khớp schema Problem trong

@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"goat/errs"
+	"github.com/bigphu/goat/errs"
 )
 
 // Decode đọc body JSON của r vào dst rồi validate, cho handler viết tay (route

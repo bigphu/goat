@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // resendSender gửi qua HTTP API của Resend (port từ mimir-2.0). Khoá API nằm

@@ -8,9 +8,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 
-	"goat/auth"
-	"goat/database"
-	"goat/database/dbtest"
+	"github.com/bigphu/goat/auth"
+	"github.com/bigphu/goat/database"
+	"github.com/bigphu/goat/database/dbtest"
 )
 
 // Dòng thời gian của một aggregate: mới nhất trước, trang sau bắt đầu ngay sau event cuối

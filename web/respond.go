@@ -3,7 +3,7 @@ package web
 import (
 	"encoding/json"
 	"fmt"
-	"goat/errs"
+	"github.com/bigphu/goat/errs"
 	"net/http"
 )
 

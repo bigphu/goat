@@ -15,8 +15,8 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 
-	"goat/jwt"
-	"goat/logger"
+	"github.com/bigphu/goat/jwt"
+	"github.com/bigphu/goat/logger"
 )
 
 func newTokens(t *testing.T) *jwt.Provider {

@@ -8,7 +8,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"goat/errs"
+	"github.com/bigphu/goat/errs"
 )
 
 const permAssetRead = "inventory.asset.read"

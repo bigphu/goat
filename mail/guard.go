@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"strings"
 
-	"goat/logger"
+	"github.com/bigphu/goat/logger"
 )
 
 // reservedTLDs: miền cấp cao dành cho test và tài liệu (RFC 2606, RFC 6761), không bao giờ

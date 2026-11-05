@@ -9,8 +9,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/riverqueue/river"
 
-	"goat/auth"
-	"goat/logger"
+	"github.com/bigphu/goat/auth"
+	"github.com/bigphu/goat/logger"
 )
 
 // ActorArgs nhúng vào args của job để job chạy dưới tên account đã yêu cầu nó:

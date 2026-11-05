@@ -11,8 +11,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"goat/database"
-	"goat/database/dbtest"
+	"github.com/bigphu/goat/database"
+	"github.com/bigphu/goat/database/dbtest"
 )
 
 // Open không có DB: cấu hình sai báo ngay, DB không tới được thì lỗi trong

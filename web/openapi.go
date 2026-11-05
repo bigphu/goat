@@ -15,7 +15,7 @@ import (
 	"github.com/getkin/kin-openapi/routers"
 	"github.com/go-chi/chi/v5"
 
-	"goat/errs"
+	"github.com/bigphu/goat/errs"
 )
 
 // ValidateRequests kiểm tra mọi request theo spec OpenAPI của module trước khi
