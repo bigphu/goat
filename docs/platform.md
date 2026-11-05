@@ -6,6 +6,7 @@
 > `<pkg>/` and `storeit/internal/platform/<pkg>` is now `goat/<pkg>`. It also mentions storeit
 > modules, binaries, compose files and make targets that do not exist in goat. Each package
 > has its own flag; search for `NEEDS UPDATE`, and remove a flag once its section is reviewed.
+> For one package at a time, start with the `README.md` in its folder, written for goat.
 
 Quick reference for `backend/internal/platform/*`: what each package offers, how a
 module is wired, and the rules that are easy to get wrong. Package `doc.go` files
@@ -342,7 +343,7 @@ invalid keys give `ErrInvalidKey`. All access goes through `os.Root`.
 
 ### web/apicommon
 
-> **NEEDS UPDATE** (ported from storeit): the source spec is now `api/common.yaml` at the module root, and the `//go:generate` path in `doc.go` was updated but not re-run. The schema test now checks the body written by `web.RenderProblem`.
+> **NEEDS UPDATE** (ported from storeit): the source spec is now `api/common.yaml` at the module root, and regenerating from there gives the same output. The schema test now checks the body written by `web.RenderProblem`.
 
 ## Testing
 
