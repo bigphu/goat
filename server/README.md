@@ -1,6 +1,6 @@
 # `server`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. The `HTTP_API_DOCS` behaviour was described in terms of storeit's `cmd/server`, and the comments still mention storeit's Excel downloads.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests.
 
 `server` runs an `http.Server` with timeouts and shuts it down gracefully when the context is cancelled. Its router comes with the shared middleware chain and returns 404 and 405 as problem+json.
 

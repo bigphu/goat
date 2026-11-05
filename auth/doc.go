@@ -6,7 +6,7 @@
 //
 //	public := web.MustOperations(spec, "/api/v1", "POST /api/v1/auth/login") // gõ sai thì panic lúc khởi động
 //	authMW := auth.Middleware(tokens, auth.Public(public...))
-//	identityMod.Handler.Mount(r, authMW)
+//	ordersMod.Handler.Mount(r, authMW)
 //
 //	// trong handler.Mount; middleware cuối danh sách chạy trước, nên auth
 //	// đứng sau web.ValidateRequests (thiếu token là 401, không phải 422)
@@ -20,7 +20,7 @@
 // Kiểm tra quyền nằm trong service, để đúng dù handler, worker hay subscriber
 // gọi. Hằng quyền do module sở hữu khai báo trong domain của nó:
 //
-//	actor, err := auth.Require(ctx, domain.PermAssetCreate)
+//	actor, err := auth.Require(ctx, domain.PermOrderCreate)
 //
 // Scheduled job chạy bằng SystemActor (mọi quyền, không có account):
 //

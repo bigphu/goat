@@ -11,7 +11,7 @@ import (
 // request vào tới đây. Server giữ HTTP_READ_TIMEOUT ngắn cho API JSON; route
 // upload file lớn tự gắn, thường cùng BodyLimit:
 //
-//	r.With(middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute)).Post("/imports", h)
+//	r.With(middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute)).Post("/uploads", h)
 //
 // d <= 0 là bỏ hạn đọc (không giới hạn), không phải hết hạn ngay.
 func ReadTimeout(d time.Duration) func(http.Handler) http.Handler {

@@ -59,7 +59,7 @@ func ActorIDFrom(ctx context.Context) uuid.UUID {
 
 // Require là dòng đầu của mọi use case cần quyền, trong service:
 //
-//	actor, err := auth.Require(ctx, domain.PermAssetCreate)
+//	actor, err := auth.Require(ctx, domain.PermOrderCreate)
 //	if err != nil {
 //		return err
 //	}

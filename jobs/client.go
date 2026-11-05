@@ -15,7 +15,7 @@ import (
 const (
 	QueueDefault = river.QueueDefault
 	// Giao event cho subscriber (events.HandleEventArgs), tách riêng để job
-	// nặng như import không làm chậm audit trail
+	// nặng không làm chậm audit trail
 	QueueEvents = "events"
 )
 
@@ -25,7 +25,7 @@ const (
 // tuần như mặc định 25 của River. Job cần khác thì tự đặt trong InsertOpts().
 const DefaultMaxAttempts = 10
 
-// NewInsertClient dựng client chỉ để insert job, cho cmd/api (không chạy job).
+// NewInsertClient dựng client chỉ để insert job, cho binary API (không chạy job).
 // MaxAttempts gắn vào job lúc insert, nên default cũng phải đặt ở đây. log nil
 // thì dùng slog.Default().
 func NewInsertClient(pool *pgxpool.Pool, log *slog.Logger) (*river.Client[pgx.Tx], error) {
@@ -36,7 +36,7 @@ func NewInsertClient(pool *pgxpool.Pool, log *slog.Logger) (*river.Client[pgx.Tx
 	return client, nil
 }
 
-// NewWorkerClient dựng client chạy job cho cmd/worker, nghe mọi queue của app
+// NewWorkerClient dựng client chạy job cho binary worker, nghe mọi queue của app
 // với số worker theo cfg. periodic là scheduled job (nhắc hạn trả, hết bảo
 // hành...), có thể nil. log nil thì dùng slog.Default().
 func NewWorkerClient(pool *pgxpool.Pool, log *slog.Logger, cfg Config, workers *river.Workers, periodic []*river.PeriodicJob) (*river.Client[pgx.Tx], error) {

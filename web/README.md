@@ -1,6 +1,6 @@
 # `web`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. It now uses goat's `errs`, which doesn't marshal to JSON, so `problem.go` builds the response body itself. The 500 title changed to `Internal Server Error`. `ErrValidation` keeps the type `/errors/validation-failed`, which differs from `errs.Validation`'s `/errors/validation`. The Swagger page title in `docs.go` is still `StoreIt API`.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. It uses goat's `errs`, which doesn't marshal to JSON, so `problem.go` builds the response body itself. `ErrValidation` keeps the type `/errors/validation-failed`, which differs from `errs.Validation`'s `/errors/validation`.
 
 `web` is the shared HTTP layer: problem+json errors, OpenAPI request validation, and JSON helpers for hand-written handlers.
 
@@ -34,7 +34,7 @@ func (h *Handler) Mount(r chi.Router, tokens *jwt.Provider) error {
 
     authMW := auth.Middleware(tokens,
         auth.Public(web.MustOperations(spec, base, "POST /api/v1/auth/login")...))
-    upload := middleware.ForOperations(web.MustOperations(spec, base, "POST /api/v1/imports"),
+    upload := middleware.ForOperations(web.MustOperations(spec, base, "POST /api/v1/uploads"),
         middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute))
 
     strict := api.NewStrictHandlerWithOptions(h, nil, api.StrictHTTPServerOptions{

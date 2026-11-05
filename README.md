@@ -9,7 +9,7 @@
 Requires Go 1.26 or later.
 
 ```bash
-go get github.com/bigphu/goat@v0.0.1
+go get github.com/bigphu/goat@v0.0.2
 ```
 
 ## Quick Start

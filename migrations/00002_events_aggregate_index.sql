@@ -1,4 +1,4 @@
--- Lịch sử hoạt động (US-16): đọc event của một aggregate theo thời gian, mới nhất trước
+-- Lịch sử hoạt động: đọc event của một aggregate theo thời gian, mới nhất trước
 -- (events.ListForAggregate). Bảng events giữ mọi event nên cần chỉ mục cho truy vấn này.
 
 -- +goose Up

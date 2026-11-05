@@ -3,13 +3,13 @@ package jobs
 import "errors"
 
 // Config của worker, đọc bằng config.Load từ JOBS_*; binary nhúng nguyên khối,
-// không thêm envPrefix. Chỉ cmd/worker cần: client chỉ insert (cmd/api) không
+// không thêm envPrefix. Chỉ binary worker cần: client chỉ insert (binary API) không
 // chạy job. Field nào bằng 0 (dựng tay trong test) thì lấy mặc định, âm là lỗi.
 //
 // Tổng số worker cộng thêm vài kết nối riêng của River phải nằm trong
 // DB_MAX_CONNS của worker, nếu không job sẽ phải chờ kết nối.
 type Config struct {
-	// Số job chạy song song của queue default (import, job nền) trên một process
+	// Số job chạy song song của queue default (job nền) trên một process
 	DefaultMaxWorkers int `env:"JOBS_DEFAULT_MAX_WORKERS" envDefault:"10"`
 	// Số job giao event chạy song song (queue events) trên một process
 	EventsMaxWorkers int `env:"JOBS_EVENTS_MAX_WORKERS" envDefault:"10"`

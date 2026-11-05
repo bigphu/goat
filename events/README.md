@@ -1,6 +1,6 @@
 # `events`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. Comments still use storeit's modules, `contract` packages and `cmd/api`. The outbox and delivery code has never run against Postgres in goat.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The outbox and delivery code has never run against Postgres in goat.
 
 `events` sends events between modules through a transactional outbox, with River handling delivery.
 
@@ -13,7 +13,7 @@ In a repository, inside the same transaction as the change:
 ```go
 return database.WithTx(ctx, r.pool, func(tx pgx.Tx) error {
     // ... update ...
-    e, err := events.New(contract.EventAssetCheckedOut, "asset", a.ID, payload)
+    e, err := events.New(contract.EventOrderPlaced, "order", o.ID, payload)
     if err != nil {
         return err
     }
@@ -27,14 +27,14 @@ return database.WithTx(ctx, r.pool, func(tx pgx.Tx) error {
 
 ```go
 registry := events.NewRegistry()
-registry.OnAll("activity.record", subscriber.Record)
-registry.On("notifications.email", subscriber.Email, contract.EventAssetCheckedOut)
+registry.OnAll("audit.record", subscriber.Record)
+registry.On("notifications.email", subscriber.Email, contract.EventOrderPlaced)
 ```
 
 ### Reading a Payload
 
 ```go
-p, err := events.Decode[contract.AssetCheckedOut](e)
+p, err := events.Decode[contract.OrderPlaced](e)
 ```
 
 ### Wiring

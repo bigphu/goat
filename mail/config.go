@@ -28,10 +28,10 @@ const (
 
 const defaultSMTPPort = 587
 
-// Config của mail. Chỉ cmd/worker dùng: API không gửi thư, chỉ xếp job.
+// Config của mail. Chỉ binary worker dùng: API không gửi thư, chỉ xếp job.
 type Config struct {
 	Transport Transport `env:"MAIL_TRANSPORT,required"`
-	// Người gửi theo RFC 5322: "StoreIt <no-reply@example.com>". Với Resend phải
+	// Người gửi theo RFC 5322: "App <no-reply@example.com>". Với Resend phải
 	// thuộc domain đã xác thực.
 	From string `env:"MAIL_FROM,required"`
 	// Nơi thư trả lời đi tới; rỗng là không đặt header

@@ -1,6 +1,6 @@
 # `database`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. Package comments still use storeit's asset examples.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests.
 
 `database` opens the shared Postgres pool (`pgxpool`) and runs transactions.
 
@@ -19,7 +19,7 @@ defer database.Close(pool)
 Repositories take the pool. A method that writes does all of its work inside one `WithTx`, including any outbox event, so the change and the event commit or disappear together. Services never see a transaction.
 
 ```go
-func (r *AssetRepository) Save(ctx context.Context, a *domain.Asset) error {
+func (r *OrderRepository) Save(ctx context.Context, o *domain.Order) error {
     return database.WithTx(ctx, r.pool, func(tx pgx.Tx) error {
         // ... write ...
         return r.outbox.Append(ctx, tx, events...)

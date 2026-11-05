@@ -1,6 +1,6 @@
 # `middleware`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. `ErrRateLimited` uses goat's `errs`, with the same status, type, title and detail as before. This page has not otherwise been reviewed against goat's needs.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. `ErrRateLimited` uses goat's `errs`.
 
 `middleware` holds the HTTP middleware the toolkit uses. `server.New` installs the shared chain, so most apps only add per-operation overrides.
 
@@ -9,7 +9,7 @@
 Settings for one OpenAPI operation go through `ForOperations` in the module's `Middlewares`, not `r.With`:
 
 ```go
-upload := middleware.ForOperations(web.MustOperations(spec, "/api/v1", "POST /api/v1/imports"),
+upload := middleware.ForOperations(web.MustOperations(spec, "/api/v1", "POST /api/v1/uploads"),
     middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute))
 ```
 

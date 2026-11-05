@@ -42,8 +42,8 @@ type HandleEventWorker struct {
 	loadActor jobs.ActorLoader
 }
 
-// RegisterWorker thêm HandleEventWorker vào workers của cmd/worker.
-// loadActor nạp quyền hiện tại của account đã gây ra event (identity cung cấp).
+// RegisterWorker thêm HandleEventWorker vào workers của binary worker.
+// loadActor nạp quyền hiện tại của account đã gây ra event (module quản lý account cung cấp).
 func RegisterWorker(workers *river.Workers, pool *pgxpool.Pool, registry *Registry, loadActor jobs.ActorLoader) {
 	river.AddWorker(workers, &HandleEventWorker{
 		q:         db.New(pool),

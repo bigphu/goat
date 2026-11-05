@@ -4,7 +4,7 @@
 //	tok, err := p.Issue(accountID, perms) // tok.Value gửi cho client
 //	claims, err := p.Verify(raw)          // lỗi so được bằng errors.Is, vd jwt.ErrExpired
 //	id, err := claims.UserID()
-//	claims.Permissions                    // vd ["inventory.asset.read", ...]
+//	claims.Permissions                    // vd ["orders.order.read", ...]
 //
 // Quyền nằm luôn trong token nên đổi role chỉ có tác dụng khi token hết hạn;
 // vì vậy giữ TTL ngắn (mặc định 15 phút).

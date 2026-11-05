@@ -15,7 +15,7 @@
 //	defer stop()
 //
 //	srv := server.New(cfg.HTTP, slog.Default())
-//	inventory.Routes(srv.Router())
+//	orders.Routes(srv.Router())
 //	if err := srv.Run(ctx); err != nil {
 //		log.Fatal(err)
 //	}

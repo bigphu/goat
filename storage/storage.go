@@ -11,7 +11,7 @@ var (
 	ErrInvalidKey = errors.New("storage: invalid key")
 )
 
-// Store lưu file theo key dạng đường dẫn có "/", vd "imports/<id>/source.xlsx".
+// Store lưu file theo key dạng đường dẫn có "/", vd "uploads/<id>/source.pdf".
 // Key do code tạo (từ ID), không lấy từ tên file người dùng upload.
 type Store interface {
 	// Put ghi toàn bộ r dưới key, ghi đè nếu đã có. Lỗi giữa chừng thì key
@@ -26,7 +26,7 @@ type Store interface {
 }
 
 // Config đọc bằng config.Load từ STORAGE_DIR; binary nhúng nguyên khối, không
-// thêm envPrefix. Hiện chỉ có ổ đĩa; bản S3 thêm vào lúc deploy.
+// thêm envPrefix. Hiện chỉ có ổ đĩa.
 type Config struct {
 	// Thư mục gốc chứa file. Để trống (dựng tay trong test) thì lấy defaultDir
 	Dir string `env:"STORAGE_DIR" envDefault:"./tmp/storage"`

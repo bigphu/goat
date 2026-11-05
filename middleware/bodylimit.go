@@ -16,7 +16,7 @@ type origBodyKey struct{}
 // Gắn thêm ở một route thì thay hẳn giới hạn của server (nới hoặc siết), vì
 // luôn bọc body gốc chứ không bọc chồng lên MaxBytesReader trước đó:
 //
-//	r.With(middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute)).Post("/imports", h)
+//	r.With(middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute)).Post("/uploads", h)
 //
 // n <= 0 là không giới hạn.
 func BodyLimit(n int64) func(http.Handler) http.Handler {

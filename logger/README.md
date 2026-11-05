@@ -1,6 +1,6 @@
 # `logger`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports, and this page has not been reviewed against goat's needs.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests.
 
 `logger` builds a `*slog.Logger` that writes JSON in production and a pretty format in development, and carries request-scoped attributes in the context.
 
@@ -12,7 +12,7 @@ Call `New` once in `main`, then use `slog` directly. Attributes added with `With
 slog.SetDefault(logger.New(os.Stdout, cfg.Log))
 
 ctx = logger.With(ctx, slog.String("request_id", id))
-slog.InfoContext(ctx, "asset checked out", "asset_id", a.ID)
+slog.InfoContext(ctx, "order placed", "order_id", o.ID)
 ```
 
 Attributes that are only known deep inside a request also reach logs written with outer contexts, such as the access log, when added with `AddToScope`:

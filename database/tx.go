@@ -18,7 +18,7 @@ type Beginner interface {
 // trả nguyên (errors.Is vẫn khớp lỗi domain), kể cả khi rollback cũng lỗi.
 //
 // Khác pgx.BeginFunc ở chỗ đó: BeginFunc để lỗi rollback đè lên lỗi của fn,
-// nên vd ErrAssetChanged (409) sẽ thành 500.
+// nên vd ErrOrderChanged (409) sẽ thành 500.
 func WithTx(ctx context.Context, db Beginner, fn func(pgx.Tx) error) error {
 	tx, err := db.Begin(ctx)
 	if err != nil {

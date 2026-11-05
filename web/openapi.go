@@ -203,7 +203,7 @@ func hasBody(r *http.Request) bool {
 
 // validatesBody: body có được đọc để validate theo schema không. Chỉ JSON
 // (application/json, các kiểu +json) mà kin-openapi có decoder; +json tự đặt
-// (vd application/vnd.storeit.report+json) kin không đọc được, coi như upload:
+// (vd application/vnd.example.report+json) kin không đọc được, coi như upload:
 // chỉ kiểm Content-Type.
 func validatesBody(contentType string) bool {
 	mt, _, err := mime.ParseMediaType(contentType)

@@ -46,7 +46,7 @@ type Problem struct {
 
 	// Type Định danh loại lỗi, ổn định, client so sánh bằng field này
 	//
-	// Example: /errors/asset-not-available
+	// Example: /errors/order-not-found
 	Type string `json:"type"`
 }
 
@@ -61,16 +61,16 @@ type PageSize = int
 // const string: with thousands of chunks the chained `+` fold is several
 // times slower for the Go compiler than parsing a slice literal.
 var swaggerSpec = []string{
-	"hFNPb9NOEP0qo/n9jtsk/QMHX8sfwQEq9YgQ2tgTe8C76+6uq4bKnwAh0QPihNTSQw8IAVf7mIrv4W+C",
-	"1k5C2kRtLrG9M++9efP2FGOjCqNJe4fRKRbSSkWebPd2IFMK/6wxwqOS7BQFaqkIIyzCmUAXZ6RkKEpo",
-	"IsvcY7QtUMkTVqXCaHsUfgIV6/kHgX5aBADWnlKyWFWiIzrk93eSvXGhYCPjg9EK5c69fNUCpBvyCVOe",
-	"PLbW2M4Aawqynsn1DF5yHp7mIM5b1ilWAiehra9xseXCswnCrz/9+dU2X3UKSVt/1/D88OULiNvmSkLX",
-	"IeA4AZkklpwbxOzDkLewK4GWjkq2lGD0ak4kFlpeL+vN+C3FPmh59igImRirpMcIy5KTddje5WR9SG+8",
-	"zG8AsPYP93DFxdHGra2q7EE2iTuwZpyTusvcmxY+5ba+ZPDZ7EecQZwZyNv6SsNJW19OwUrQs/Pppvko",
-	"LNGtA3YbBidZwLuMwXnpSwf57Bz2dnZQIHtSXdv/liYY4X/Df5diOE/KcCUm1ZJbWiun4b3HXAnK0ieB",
-	"nn1O66r2Z99K0Glb/9QCUm6bM52CzmQJqm0+8q2hN83bf1hPYNt80BkkUmeQm7a+CFjNFxbQNp81XJ91",
-	"5wLinEl7cAbc7EJnMG7r3zrtY7rwmE6kKoJ6HPbuDqVz5Le08VvyWHIuxzndG+HudGHE0qz1sIQ+1hPT",
-	"+di7hvtGKaNhcWEFHpN1/aTbg9FgFIwwBWlZMEa4OxgNdlFgIX0W1lFVfwMAAP//",
+	"hFNPb9NOEP0qo/n9jtsk/QMHX8sfwQEq9YgQ2tobe8A76+6uq4TKnwAh0QPihNTSQw8IAVf7mIrv4W+C",
+	"1k5C2kRtLrG9M++9efP2FGOjC8OKvcPoFAtppVZe2e7tQKYq/BNjhMelslMUyFIrjLAIZwJdnCktQ1Gi",
+	"xrLMPUbbArWckC41Rtuj8BOoiecfBPppEQCIvUqVxaoSHdEhvb+T7I0LBRsZH4xWKHfu5asWIN2QT0jl",
+	"yWNrje0MsKZQ1pNyPYOXlIenOYjzljjFSuA4tPU1LrZUeDJB+PWnP7/a5iunkLT1d4bnhy9fQNw2VxK6",
+	"DgEnCcgkscq5QUw+DHkLuxJo1XFJViUYvZoTiYWW18t6c/RWxT5oefYoCBkbq6XHCMuSknXY3uVkfUhv",
+	"vMxvABD7h3u44uJo49ZWVfYgm8QdWHOUK32XuTctfEptfUngs9mPOIM4M5C39RXDpK0vp2Al8Ox8umk+",
+	"FZbo1gG7DYOTJOBdRuC89KWDfHYOezs7KJC80l3b/1aNMcL/hv8uxXCelOFKTKolt7RWTsN7j7kSlKVP",
+	"Aj35XK2r2p99K4HTtv7JAlJqmzNOgTNZgm6bj3Rr6E3z9h/WE9g2HziDRHIGuWnri4DVfCEBbfOZ4fqs",
+	"OxcQ56TYgzPgZhecwVFb/+a0j+nCYzWRugjqcdi7OzQ2UXaLjd8am5KTe+PbnS5MWBq1HpTQRzw2nYe9",
+	"Y7hvtDYMi8sq8ERZ10+5PRgNRsEEUyiWBWGEu4PRYBcFFtJnYRVV9TcAAP//",
 }
 
 // decodeSpec returns the embedded OpenAPI spec as raw JSON bytes,

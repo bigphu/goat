@@ -1,6 +1,6 @@
 # `apicommon`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The source spec moved to `api/common.yaml` at the module root, and regenerating from there gives the same output. The comments in `common.yaml` still describe storeit's paths and `make generate`.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The source spec is `api/common.yaml` at the module root.
 
 `apicommon` holds the Go types generated from [`api/common.yaml`](../../api/common.yaml): errors, paging and IDs. Modules' generated code shares them through `import-mapping`. `apicommon.gen.go` is generated, so don't edit it by hand.
 

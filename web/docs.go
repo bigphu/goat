@@ -87,7 +87,7 @@ var docsPage = template.Must(template.New("docs").Parse(`<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StoreIt API</title>
+<title>API</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@{{.Version}}/swagger-ui.css">
 </head>
 <body>

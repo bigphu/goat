@@ -9,7 +9,7 @@ import (
 )
 
 // reservedTLDs: miền cấp cao dành cho test và tài liệu (RFC 2606, RFC 6761), không bao giờ
-// là hộp thư thật. Tài khoản demo dùng @storeit.test.
+// là hộp thư thật. Tài khoản demo thường dùng @example.test.
 var reservedTLDs = []string{"test", "example", "invalid", "localhost"}
 
 // IsReservedTestDomain: địa chỉ thuộc một miền dành cho test (.test, .example, .invalid,
@@ -29,7 +29,7 @@ func IsReservedTestDomain(email string) bool {
 }
 
 // guarded bọc transport: thư tới miền dành cho test được ghi log rồi bỏ, không gửi. Dev cũng
-// gửi qua Resend thật, mà tài khoản demo là @storeit.test.
+// gửi qua Resend thật, mà tài khoản demo thường là @example.test.
 type guarded struct {
 	next Sender
 	log  *slog.Logger

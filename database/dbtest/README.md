@@ -1,6 +1,6 @@
 # `dbtest`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. It migrates from `github.com/bigphu/goat/migrations`, which holds only the two `platform.events` migrations. The test database is still named `storeit`, and comments still refer to storeit's `compose.yml` and `cmd/migrate`. The tests that used it were removed, so nothing in the repo calls it now, and it has never run in goat.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. It migrates from `github.com/bigphu/goat/migrations`, which holds only the two `platform.events` migrations. The tests that used it were removed, so nothing in the repo calls it now, and it has never run in goat.
 
 `dbtest` starts a real Postgres for integration tests with testcontainers, with the goose and River migrations applied.
 

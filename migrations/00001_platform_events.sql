@@ -1,5 +1,5 @@
 -- Nhật ký event bền vững của outbox. Giữ mọi event kể cả sau khi River dọn
--- job xong, để replay cho subscriber mới (vd dựng lại activity).
+-- job xong, để replay cho subscriber mới (vd dựng lại audit log).
 
 -- +goose Up
 CREATE SCHEMA IF NOT EXISTS platform;

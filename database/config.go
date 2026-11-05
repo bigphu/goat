@@ -14,7 +14,7 @@ import (
 // Thông số pool lấy từ đây, đè lên pool_max_conns, connect_timeout... nếu có
 // trong URL, để mọi thông số pool nằm một chỗ.
 type Config struct {
-	// URL rỗng thì pgx đọc biến PG* (PGHOST, PGUSER...), cách compose đang dùng.
+	// URL rỗng thì pgx đọc biến PG* (PGHOST, PGUSER...).
 	// Mật khẩu đọc thêm từ PGPASSWORD_FILE, xem parseConfig.
 	URL string `env:"DB_URL"`
 

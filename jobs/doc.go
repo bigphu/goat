@@ -7,19 +7,19 @@
 // deploy (job cũ trong DB tìm worker theo kind). Job do người dùng yêu cầu
 // nhúng ActorArgs:
 //
-//	// inventory/job/commit_import.go
-//	type CommitImportArgs struct {
+//	// reports/job/generate_report.go
+//	type GenerateReportArgs struct {
 //		jobs.ActorArgs
-//		ImportID uuid.UUID `json:"import_id"`
+//		ReportID uuid.UUID `json:"report_id"`
 //	}
 //
-//	func (CommitImportArgs) Kind() string { return "inventory.commit_import" }
+//	func (GenerateReportArgs) Kind() string { return "reports.generate" }
 //
-// cmd/api dùng client chỉ insert, cmd/worker dùng client chạy job; bọc client
+// Binary API dùng client chỉ insert, binary worker dùng client chạy job; bọc client
 // rồi truyền Enqueuer cho repository/service:
 //
-//	client, err := jobs.NewInsertClient(pool, log)                   // cmd/api
-//	client, err := jobs.NewWorkerClient(pool, log, cfg.Jobs, workers, periodic) // cmd/worker
+//	client, err := jobs.NewInsertClient(pool, log)                   // binary API
+//	client, err := jobs.NewWorkerClient(pool, log, cfg.Jobs, workers, periodic) // binary worker
 //	enq := jobs.NewRiver(client)
 //
 // Job đi kèm một thay đổi dữ liệu thì repository enqueue bằng EnqueueTx, trong
@@ -27,15 +27,15 @@
 // thì job mất theo (transactional outbox). Service quyết định có cần job hay
 // không, nhưng không bao giờ thấy transaction:
 //
-//	// inventory/repository/import_repository.go
-//	func (r *ImportRepository) SaveCommitting(ctx context.Context, im *domain.Import) error {
+//	// reports/repository/report_repository.go
+//	func (r *ReportRepository) SaveRequested(ctx context.Context, rep *domain.Report) error {
 //		return database.WithTx(ctx, r.pool, func(tx pgx.Tx) error {
-//			if err := r.q.WithTx(tx).MarkImportCommitting(ctx, im.ID); err != nil {
+//			if err := r.q.WithTx(tx).MarkReportRequested(ctx, rep.ID); err != nil {
 //				return err
 //			}
-//			return r.jobs.EnqueueTx(ctx, tx, job.CommitImportArgs{
+//			return r.jobs.EnqueueTx(ctx, tx, job.GenerateReportArgs{
 //				ActorArgs: jobs.ActorArgsFrom(ctx),
-//				ImportID:  im.ID,
+//				ReportID:  rep.ID,
 //			}, jobs.WithUniqueArgs())
 //		})
 //	}
@@ -43,12 +43,12 @@
 // Worker (trong worker/ của module) đặt lại actor rồi gọi đúng một method của
 // service:
 //
-//	func (w *CommitImportWorker) Work(ctx context.Context, j *river.Job[job.CommitImportArgs]) error {
+//	func (w *GenerateReportWorker) Work(ctx context.Context, j *river.Job[job.GenerateReportArgs]) error {
 //		ctx, err := jobs.RestoreActor(ctx, j.Args.ActorID, w.loadActor)
 //		if err != nil {
 //			return err
 //		}
-//		return w.svc.CommitImport(ctx, j.Args.ImportID)
+//		return w.svc.GenerateReport(ctx, j.Args.ReportID)
 //	}
 //
 // Job không gắn với thay đổi nào thì service gọi thẳng Enqueue, không có đảm

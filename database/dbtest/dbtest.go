@@ -1,7 +1,7 @@
 // Package dbtest dựng Postgres thật cho integration test (testcontainers-go),
 // đã chạy mọi goose migration và migration của River.
 //
-//	func TestSaveCheckOut(t *testing.T) {
+//	func TestSave(t *testing.T) {
 //		pool := dbtest.Pool(t)
 //		...
 //	}
@@ -34,7 +34,7 @@ import (
 	"github.com/bigphu/goat/migrations"
 )
 
-// Cùng bản với compose.yml
+// Bản Postgres dùng cho test
 const image = "postgres:18-alpine"
 
 var (
@@ -58,7 +58,7 @@ func Pool(t *testing.T) *pgxpool.Pool {
 
 func start(ctx context.Context) (*pgxpool.Pool, error) {
 	ctr, err := postgres.Run(ctx, image,
-		postgres.WithDatabase("storeit"),
+		postgres.WithDatabase("test"),
 		postgres.WithUsername("app_user"),
 		postgres.WithPassword("app_pw"),
 		postgres.BasicWaitStrategies(),
@@ -83,7 +83,7 @@ func start(ctx context.Context) (*pgxpool.Pool, error) {
 	return p, nil
 }
 
-// migrate làm đúng việc cmd/migrate làm: goose rồi River
+// migrate chạy goose rồi River, giống bước migrate của app khi deploy
 func migrate(ctx context.Context, p *pgxpool.Pool) error {
 	sqlDB := stdlib.OpenDBFromPool(p)
 	defer func() { _ = sqlDB.Close() }()

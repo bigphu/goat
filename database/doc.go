@@ -17,14 +17,14 @@
 // hết thay đổi đó trong một WithTx, gồm cả ghi event vào outbox, để thay đổi
 // và event cùng commit hoặc cùng mất. Service không bao giờ thấy transaction:
 //
-//	func (r *AssetRepository) SaveCheckOut(ctx context.Context, a *domain.Asset) error {
+//	func (r *OrderRepository) Save(ctx context.Context, o *domain.Order) error {
 //		return database.WithTx(ctx, r.pool, func(tx pgx.Tx) error {
-//			n, err := r.q.WithTx(tx).UpdateAssetCustody(ctx, ...)
+//			n, err := r.q.WithTx(tx).UpdateOrderStatus(ctx, ...)
 //			if err != nil {
 //				return err
 //			}
 //			if n == 0 {
-//				return domain.ErrAssetChanged // lỗi domain đi ra nguyên vẹn
+//				return domain.ErrOrderChanged // lỗi domain đi ra nguyên vẹn
 //			}
 //			return r.outbox.Append(ctx, tx, events...)
 //		})

@@ -15,6 +15,6 @@
 // Thông số riêng một operation sinh từ OpenAPI (body lớn hơn, đọc lâu hơn) gắn
 // qua ForOperations trong Middlewares của module, không dùng r.With:
 //
-//	upload := middleware.ForOperations(web.MustOperations(spec, "/api/v1", "POST /api/v1/imports"),
+//	upload := middleware.ForOperations(web.MustOperations(spec, "/api/v1", "POST /api/v1/uploads"),
 //		middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute))
 package middleware

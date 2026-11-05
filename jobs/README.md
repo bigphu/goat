@@ -1,6 +1,6 @@
 # `jobs`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. The fixed queues and worker config are storeit's choices, and comments still use storeit's import job and `cmd/api`. The River client code has never run against Postgres in goat.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The fixed queues and worker config were chosen for that application, and the River client code has never run against Postgres in goat.
 
 `jobs` puts background work on a queue (River on Postgres). Services and repositories see only the `Enqueuer` interface and never import River.
 
@@ -11,12 +11,12 @@
 Args are a JSON-serializable struct. `Kind()` must never change, because stored jobs find their worker by kind. A job a user asked for embeds `ActorArgs`.
 
 ```go
-type CommitImportArgs struct {
+type GenerateReportArgs struct {
     jobs.ActorArgs
-    ImportID uuid.UUID `json:"import_id"`
+    ReportID uuid.UUID `json:"report_id"`
 }
 
-func (CommitImportArgs) Kind() string { return "inventory.commit_import" }
+func (GenerateReportArgs) Kind() string { return "reports.generate" }
 ```
 
 ### Creating a Client
@@ -34,9 +34,9 @@ A job that goes with a data change is enqueued in the same transaction, so it ex
 ```go
 return database.WithTx(ctx, r.pool, func(tx pgx.Tx) error {
     // ... write ...
-    return r.jobs.EnqueueTx(ctx, tx, CommitImportArgs{
+    return r.jobs.EnqueueTx(ctx, tx, GenerateReportArgs{
         ActorArgs: jobs.ActorArgsFrom(ctx),
-        ImportID:  id,
+        ReportID:  id,
     }, jobs.WithUniqueArgs())
 })
 ```
@@ -48,12 +48,12 @@ A job with no related change uses `Enqueue`, without that guarantee.
 A worker restores the actor, then calls one service method. Permissions are reloaded at run time.
 
 ```go
-func (w *CommitImportWorker) Work(ctx context.Context, j *river.Job[CommitImportArgs]) error {
+func (w *GenerateReportWorker) Work(ctx context.Context, j *river.Job[GenerateReportArgs]) error {
     ctx, err := jobs.RestoreActor(ctx, j.Args.ActorID, w.loadActor)
     if err != nil {
         return err
     }
-    return w.svc.CommitImport(ctx, j.Args.ImportID)
+    return w.svc.GenerateReport(ctx, j.Args.ReportID)
 }
 ```
 

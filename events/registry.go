@@ -10,7 +10,7 @@ import (
 // event nhiều lần (retry, crash giữa chừng).
 type Handler func(ctx context.Context, e Event) error
 
-// Registry nối loại event với các subscriber có tên. cmd/api và cmd/worker
+// Registry nối loại event với các subscriber có tên. binary API và binary worker
 // dựng cùng một registry: API cần biết enqueue job nào, worker cần biết chạy
 // code nào. Đăng ký hết lúc khởi động, trước khi dùng; không an toàn khi
 // đăng ký song song.
@@ -31,8 +31,8 @@ func NewRegistry() *Registry {
 // "<module>.<phản ứng>", là khoá của job nên không được đổi khi còn job đang
 // chờ, và mỗi tên chỉ đăng ký một lần (gom mọi loại event vào một lần gọi):
 //
-//	r.On("notifications.checkout_email", m.subscriber.CheckoutEmail,
-//		invcontract.EventAssetCheckedOut, invcontract.EventAssetReturned)
+//	r.On("notifications.order_email", m.subscriber.OrderEmail,
+//		contract.EventOrderPlaced, contract.EventOrderCancelled)
 func (r *Registry) On(subscriber string, h Handler, eventTypes ...string) {
 	if len(eventTypes) == 0 {
 		panic(fmt.Sprintf("events: subscriber %q needs at least one event type", subscriber))
@@ -43,7 +43,7 @@ func (r *Registry) On(subscriber string, h Handler, eventTypes ...string) {
 	}
 }
 
-// OnAll đăng ký subscriber nhận mọi event, vd activity ghi audit trail
+// OnAll đăng ký subscriber nhận mọi event, vd ghi audit trail
 func (r *Registry) OnAll(subscriber string, h Handler) {
 	r.add(subscriber, h)
 	r.all = append(r.all, subscriber)

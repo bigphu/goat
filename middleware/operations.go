@@ -7,11 +7,11 @@ import (
 )
 
 // ForOperations chỉ áp mws cho các operation liệt kê, dạng "METHOD <route
-// pattern>" như auth.Public, vd "POST /api/v1/imports". Router sinh từ OpenAPI
+// pattern>" như auth.Public, vd "POST /api/v1/uploads". Router sinh từ OpenAPI
 // chỉ cho một danh sách Middlewares chung cho mọi operation của module, nên
 // thông số riêng của một operation (body lớn hơn, đọc lâu hơn) gắn qua đây:
 //
-//	upload := middleware.ForOperations(web.MustOperations(spec, "/api/v1", "POST /api/v1/imports"),
+//	upload := middleware.ForOperations(web.MustOperations(spec, "/api/v1", "POST /api/v1/uploads"),
 //		middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute))
 //
 //	// oapi-codegen chạy middleware cuối danh sách trước: auth, rồi upload

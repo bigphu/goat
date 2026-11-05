@@ -40,7 +40,7 @@ func New(cfg Config, log *slog.Logger) *Server {
 	r.Use(middleware.RequestLogger(log))
 	r.Use(middleware.Recoverer())
 	// Nén gzip phản hồi JSON (danh sách dài nhỏ đi vài lần) khi client nhận gzip; file tải về
-	// (Excel) để nguyên. Không có phản hồi nào trộn bí mật với dữ liệu người gọi tự gửi lên,
+	// để nguyên. Không có phản hồi nào trộn bí mật với dữ liệu người gọi tự gửi lên,
 	// nên nén không mở đường cho BREACH
 	r.Use(chimw.Compress(5, "application/json", "application/problem+json"))
 

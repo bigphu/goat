@@ -1,17 +1,13 @@
 # Platform packages: API reference
 
-> **NEEDS UPDATE:** every package here except `errs` was ported from storeit on 2026-11-05 and is due to be
-> re-implemented by hand,
-> and this file is still storeit's text. In the code, only the import paths and the `errs`
-> calls have changed. When reading the text below, `backend/internal/platform/<pkg>` is now
-> `<pkg>/` and `storeit/internal/platform/<pkg>` is now `github.com/bigphu/goat/<pkg>`. It also mentions storeit
-> modules, binaries, compose files and make targets that do not exist in goat. Each package
-> has its own flag; search for `NEEDS UPDATE`, and remove a flag once its section is reviewed.
-> For one package at a time, start with the `README.md` in its folder, written for goat.
+> **NEEDS UPDATE:** every package here except `errs` was ported from an earlier application and is
+> due to be re-implemented by hand. The ported tests were removed, so these packages have no tests yet.
+> Each package has its own flag; search for `NEEDS UPDATE`, and remove a flag once its package is redone.
+> For one package at a time, start with the `README.md` in its folder.
 
-Quick reference for `backend/internal/platform/*`: what each package offers, how a
+Quick reference for goat's packages: what each package offers, how a
 module is wired, and the rules that are easy to get wrong. Package `doc.go` files
-(Vietnamese) hold the per-package examples; `go doc ./internal/platform/<pkg>` lists
+(Vietnamese) hold the per-package examples; `go doc ./<pkg>` lists
 exact signatures. Keep this file in sync when a platform API changes.
 
 ## Package map
@@ -48,19 +44,14 @@ the default" (configs built by hand in tests); negative values are rejected.
 | `logger.Config` | `LOG_LEVEL` (info), `LOG_FORMAT` (json \| pretty) |
 | `server.Config` | `HTTP_ADDR` (:8080), `HTTP_READ_HEADER_TIMEOUT` (10s), `HTTP_READ_TIMEOUT` (30s), `HTTP_IDLE_TIMEOUT` (60s), `HTTP_SHUTDOWN_TIMEOUT` (15s), `HTTP_MAX_BODY_BYTES` (1048576), `HTTP_TRUSTED_PROXIES` (empty; CIDRs, comma-separated), `HTTP_API_DOCS` (false; Swagger UI at `/api/docs`, dev only) |
 | `database.Config` | `DB_URL` (empty: pgx reads `PG*`), `DB_MAX_CONNS` (25), `DB_MIN_CONNS` (0), `DB_MAX_CONN_LIFETIME` (1h), `DB_MAX_CONN_LIFETIME_JITTER` (5m), `DB_MAX_CONN_IDLE_TIME` (30m), `DB_HEALTH_CHECK_PERIOD` (1m), `DB_CONNECT_TIMEOUT` (5s). Also `PGPASSWORD_FILE` (Docker secret) |
-| `jwt.Config` | `JWT_KEYS_FILE` (required; file of `kid:base64`, comma or newline separated, >= 32-byte secrets), `JWT_ACTIVE_KID` (required), `JWT_ISSUER` (required), `JWT_AUDIENCE` (storeit-api), `JWT_ACCESS_TOKEN_TTL` (15m) |
+| `jwt.Config` | `JWT_KEYS_FILE` (required; file of `kid:base64`, comma or newline separated, >= 32-byte secrets), `JWT_ACTIVE_KID` (required), `JWT_ISSUER` (required), `JWT_AUDIENCE` (api), `JWT_ACCESS_TOKEN_TTL` (15m) |
 | `storage.Config` | `STORAGE_DIR` (./tmp/storage) |
 | `jobs.Config` | `JOBS_DEFAULT_MAX_WORKERS` (10), `JOBS_EVENTS_MAX_WORKERS` (10). Worker only |
 | `mail.Config` | `MAIL_TRANSPORT` (required: smtp \| resend \| log), `MAIL_FROM` (required, `Name <addr>`), `MAIL_REPLY_TO`, `MAIL_SMTP_HOST`, `MAIL_SMTP_PORT` (587), `MAIL_SMTP_USERNAME`, `MAIL_SMTP_PASSWORD_FILE`, `MAIL_SMTP_TLS` (starttls \| tls \| none), `MAIL_RESEND_API_KEY_FILE`. Worker only |
-| `inventory.Config` | `INVENTORY_EXPORT_MAX_ROWS` (50000; 0 means 50000, otherwise 1 to 1000000). Server only |
-| `seed.Config` | `SEED_PASSWORD` (required, 12-72 bytes; every demo account uses it). `cmd/seed` only (`make seed`, dev) |
 
-Compose files (repo root) set `HTTP_ADDR`, `LOG_*`, `JWT_*` and `PG*`. `compose.prod.yml`
-pins the compose network to `APP_NET_SUBNET` (172.30.0.0/24) and trusts it as
-`HTTP_TRUSTED_PROXIES`: the reverse proxy on the host reaches the `web` container (nginx)
-through that network's gateway, nginx appends its peer to `X-Forwarded-For` and proxies
-`/api` to the app. The host proxy must send `X-Forwarded-For`. Without it every request carries the
-gateway IP: per-IP rate limits become one shared bucket and logs show the wrong client.
+Behind a reverse proxy, list its network in `HTTP_TRUSTED_PROXIES` and have the proxy send
+`X-Forwarded-For`. Without it every request carries the proxy's IP: per-IP rate limits become one
+shared bucket and logs show the wrong client.
 
 Paging (`web/apicommon`): `page` 1..100000, `page_size` 1..200, so `(page-1)*page_size`
 always fits an `int32` OFFSET.
@@ -76,7 +67,7 @@ BodyLimit(HTTP_MAX_BODY_BYTES) -> NoSniff -> ClientIP(trusted) -> RequestID
 
 `Compress` is chi's: gzip/deflate for `application/json` and `application/problem+json`
 when the client accepts it (the access log's `bytes` is then the compressed size).
-Downloads (Excel) and other types pass through. No response mixes a secret with
+Downloads and other types pass through. No response mixes a secret with
 caller-supplied text, which BREACH would need; keep it that way.
 
 Module level (oapi-codegen `ChiServerOptions.Middlewares`, run after routing). The
@@ -97,7 +88,7 @@ its errors go to `web.RequestError`.
 
 `oapi.yaml` must have `strict-server: true`, `chi-server: true`,
 `embedded-spec: true` (for `api.GetSwagger()`), and
-`import-mapping: {../../../api/common.yaml: storeit/internal/platform/web/apicommon}`.
+`import-mapping` from the path of `api/common.yaml` to `github.com/bigphu/goat/web/apicommon`.
 
 ```go
 func (h *Handler) Mount(r chi.Router, tokens *jwt.Provider) error {
@@ -109,7 +100,7 @@ func (h *Handler) Mount(r chi.Router, tokens *jwt.Provider) error {
 
     authMW := auth.Middleware(tokens,
         auth.Public(web.MustOperations(spec, base, "POST /api/v1/auth/login")...))
-    upload := middleware.ForOperations(web.MustOperations(spec, base, "POST /api/v1/imports"),
+    upload := middleware.ForOperations(web.MustOperations(spec, base, "POST /api/v1/uploads"),
         middleware.BodyLimit(50<<20), middleware.ReadTimeout(10*time.Minute))
 
     strict := api.NewStrictHandlerWithOptions(h, nil, api.StrictHTTPServerOptions{
@@ -135,15 +126,15 @@ param names exactly as in the spec (`/things/{thingID}`). Wrap lists in
 
 ### config
 
-> **NEEDS UPDATE** (ported from storeit): documented only under [Configuration](#configuration), whose table still lists storeit's `inventory.Config` and `seed.Config` and describes storeit's compose setup. The `cmd/<bin>/config.go` convention assumes binaries goat does not have.
+> **NEEDS UPDATE** (ported): documented only under [Configuration](#configuration).
 
 ### server
 
-> **NEEDS UPDATE** (ported from storeit): documented only under [Configuration](#configuration) and [HTTP request pipeline](#http-request-pipeline). `HTTP_API_DOCS` still refers to storeit's `cmd/server` and dev compose.
+> **NEEDS UPDATE** (ported): documented only under [Configuration](#configuration) and [HTTP request pipeline](#http-request-pipeline).
 
 ### web
 
-> **NEEDS UPDATE** (ported from storeit): `errs.Error` no longer marshals itself, so `web/problem.go` now builds the problem+json body from the getters; `errors[]` entries also carry `errs.ErrRequired` or `errs.ErrInvalid` as their cause. The 500 title is now `Internal Server Error` (from goat's `errs.ErrInternal`, was `Internal server error`). `ErrValidation` keeps the type `/errors/validation-failed`, which differs from `errs.Validation`'s `/errors/validation`. The Swagger page title in `web/docs.go` is still `StoreIt API`, and [Wiring a module](#wiring-a-module-strict-server) still shows the `storeit/...` `import-mapping`.
+> **NEEDS UPDATE** (ported): `errs.Error` doesn't marshal to JSON, so `web/problem.go` builds the problem+json body from the getters, and `errors[]` entries carry `errs.ErrRequired` or `errs.ErrInvalid` as their cause. `ErrValidation` keeps the type `/errors/validation-failed`, which differs from `errs.Validation`'s `/errors/validation`.
 
 - `ValidateRequests(spec, baseURL)`: validates params, `Content-Type` and the body
   against the spec. Errors: params 400 `/errors/invalid-request` + `errors[]`; body
@@ -177,7 +168,7 @@ param names exactly as in the spec (`/things/{thingID}`). Wrap lists in
 - `MountDocs(r, web.APIDoc{Name, Spec}...)`: Swagger UI at `GET /api/docs` and each spec
   as JSON at `GET /api/docs/<name>.json` (names: lowercase, digits, dashes). Each module
   exposes `APIDoc()` built from its embedded `api.GetSwagger()` (refs to `common.yaml`
-  already resolved). `cmd/server` mounts it only when `HTTP_API_DOCS=true` (dev compose):
+  already resolved). A binary should mount it only when `HTTP_API_DOCS=true` (development):
   the page is public and loads Swagger UI from jsDelivr. Same origin as the API, so "Try
   it out" works: call `/auth/login`, paste `access_token` into Authorize. A new module adds
   its `APIDoc()` to the `MountDocs` call.
@@ -192,7 +183,7 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### auth
 
-> **NEEDS UPDATE** (ported from storeit): the error variables now use goat's `errs` constructors, with the same types and titles. `ErrForbidden` relies on the default `/errors/forbidden` type. The permission examples are storeit's.
+> **NEEDS UPDATE** (ported): the error variables use goat's `errs`.
 
 - `Middleware(tokens, auth.Public(ops...))`: verifies the bearer token, puts
   `Actor{AccountID, Permissions}` in ctx, adds `actor_id` to the log scope. Public
@@ -206,7 +197,7 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### jwt
 
-> **NEEDS UPDATE** (ported from storeit): the code is unchanged apart from imports. The `JWT_AUDIENCE` default is still `storeit-api`.
+> **NEEDS UPDATE** (ported): due to be re-implemented.
 
 - `p, _ := jwt.New(cfg)`, `tok, _ := p.Issue(accountID, perms)`, `claims, err := p.Verify(raw)`,
   `claims.UserID()`, `claims.TokenID()`, `claims.Permissions`.
@@ -219,7 +210,7 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### database
 
-> **NEEDS UPDATE** (ported from storeit): the code is unchanged apart from imports. The text has not been reviewed for goat.
+> **NEEDS UPDATE** (ported): due to be re-implemented.
 
 - `pool, err := database.Open(ctx, cfg.DB)` validates, applies pool settings
   (overriding `pool_*` in the URL), reads `PGPASSWORD_FILE`, then pings.
@@ -231,14 +222,14 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### database/dbtest
 
-> **NEEDS UPDATE** (ported from storeit): migrates from `github.com/bigphu/goat/migrations`, which holds only the two `platform.events` migrations (renumbered 00001 and 00002). The test database is still named `storeit`, and comments still refer to storeit's `compose.yml` and `cmd/migrate`. The tests that used it were removed, so nothing in the repo calls it now, and it has never run in goat.
+> **NEEDS UPDATE** (ported): migrates from `github.com/bigphu/goat/migrations`, which holds only the two `platform.events` migrations. Nothing in the repo calls it now, and it has never run in goat.
 
 ### events
 
-> **NEEDS UPDATE** (ported from storeit): `events/db` is regenerated from goat's own migrations with the root `sqlc.yml`. The examples use storeit's `contract` package and aggregates.
+> **NEEDS UPDATE** (ported): `events/db` is generated from goat's own migrations with the root `sqlc.yml`. The outbox and delivery code has never run against Postgres in goat.
 
 - Emit (in a repository, inside `WithTx`):
-  `e, _ := events.New(contract.EventX, "asset", id, payload)` then
+  `e, _ := events.New(contract.EventX, "order", id, payload)` then
   `outbox.Append(ctx, tx, e)`. Append fills `ActorID` from ctx and inserts the event
   plus one `HandleEventArgs` job per subscriber, in the same tx.
 - Subscribe: `r.On("module.reaction", handler, eventTypes...)` (one or more types),
@@ -256,7 +247,7 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### jobs
 
-> **NEEDS UPDATE** (ported from storeit): the code is unchanged apart from imports. The fixed queues and worker config, and the example job args, are storeit's.
+> **NEEDS UPDATE** (ported): the fixed queues and worker config were chosen for that application, and the River client code has never run against Postgres in goat.
 
 - Clients: `jobs.NewInsertClient(pool, log)` (API, insert only) and
   `jobs.NewWorkerClient(pool, log, cfg.Jobs, workers, periodic)` (worker; queues
@@ -275,7 +266,7 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### logger
 
-> **NEEDS UPDATE** (ported from storeit): the code is unchanged apart from imports. The text has not been reviewed for goat.
+> **NEEDS UPDATE** (ported): due to be re-implemented.
 
 - `slog.SetDefault(logger.New(os.Stdout, cfg.Log))` once in main; app code uses `slog.*Context(ctx, ...)`.
 - `ctx = logger.With(ctx, attrs...)`: attrs on every log written with that ctx.
@@ -287,7 +278,7 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### middleware
 
-> **NEEDS UPDATE** (ported from storeit): `ErrRateLimited` now uses goat's `errs` constructors, with the same status, type, title and detail. The text has not otherwise been reviewed for goat.
+> **NEEDS UPDATE** (ported): `ErrRateLimited` uses goat's `errs`.
 
 `BodyLimit(n)` (n <= 0 means no limit; a later `BodyLimit` replaces the limit, it
 doesn't stack), `ReadTimeout(d)` (d <= 0 removes the deadline),
@@ -310,13 +301,13 @@ each one counts separately.
 
 ### mail
 
-> **NEEDS UPDATE** (ported from storeit): the code is unchanged apart from imports. Comments and examples still mention `StoreIt`, `@storeit.test` and the `identity` module.
+> **NEEDS UPDATE** (ported): due to be re-implemented.
 
 - `sender, err := mail.New(cfg.Mail, log)` (worker only; no network until `Send`).
   `sender.Send(ctx, mail.Message{To: mail.Address{Name, Email}, Subject, Text, HTML, IdempotencyKey})`.
   From and Reply-To come from config.
 - Send from a River job, never inside a request. Set `IdempotencyKey` (e.g.
-  `identity/invite/<token id>`): Resend drops a repeat with the same key for 24h, so a
+  `accounts/invite/<token id>`): Resend drops a repeat with the same key for 24h, so a
   job retried after a successful send does not mail twice. SMTP and log ignore it.
 - `mail.IsPermanent(err)`: Resend 4xx except 408/429, SMTP 5xx, invalid addresses.
   Return `river.JobCancel(err)` for these; everything else (network, 5xx from Resend,
@@ -335,28 +326,19 @@ each one counts separately.
 
 ### storage
 
-> **NEEDS UPDATE** (ported from storeit): the code is unchanged apart from imports. The key example is storeit's.
+> **NEEDS UPDATE** (ported): due to be re-implemented.
 
 `store, _ := storage.NewLocal(cfg.Storage)`; `Put(ctx, key, r)` (atomic temp + rename,
 fsync, stops when ctx is cancelled), `Get` (caller closes; `ErrNotFound`), `Delete`
-(idempotent). Keys are code-generated relative paths (`imports/<id>/source.xlsx`);
+(idempotent). Keys are code-generated relative paths (`uploads/<id>/source.pdf`);
 invalid keys give `ErrInvalidKey`. All access goes through `os.Root`.
 
 ### web/apicommon
 
-> **NEEDS UPDATE** (ported from storeit): the source spec is now `api/common.yaml` at the module root, and regenerating from there gives the same output.
+> **NEEDS UPDATE** (ported): the source spec is `api/common.yaml` at the module root.
 
 ## Testing
 
-> **NEEDS UPDATE:** this section describes storeit's tests. The ported tests were removed from goat
-> ahead of the re-implementation, so goat has no tests yet, and `make test` and `internal/platform/...` are storeit's.
+> **NEEDS UPDATE:** the ported tests were removed ahead of the re-implementation, so goat has no tests yet.
 
-- `go test ./...` (or `make test`). Database-backed tests use `dbtest.Pool(t)`: one
-  Postgres container per test binary, goose and River migrations applied, shared
-  between tests (use fresh IDs and table names, don't assume an empty DB).
-- Without Docker these tests **skip** locally. With several packages starting
-  containers at once the health check can skip them, or testcontainers can fail to
-  create its Docker provider on Windows. Run `CI=true go test -p 1 ./...` (skips fail,
-  one package at a time) and keep Docker Desktop running.
-- `internal/platform/events/db` is sqlc output; fake its `DBTX` interface to unit-test
-  worker logic without Postgres (see `events/worker_test.go`).
+For tests against a real database, see [`database/dbtest`](../database/dbtest/README.md).

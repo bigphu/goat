@@ -1,5 +1,5 @@
 # Schema dùng chung cho spec của mọi module, sinh một lần vào
-# internal/platform/web/apicommon (make generate). Module tham chiếu qua
+# web/apicommon (go generate ./web/apicommon). Module tham chiếu qua
 # import-mapping trong oapi.yaml:
 #
 #   $ref: '../../../api/common.yaml#/components/schemas/Problem'
@@ -44,7 +44,7 @@ components:
         type:
           type: string
           description: Định danh loại lỗi, ổn định, client so sánh bằng field này
-          example: /errors/asset-not-available
+          example: /errors/order-not-found
         title:
           type: string
           description: Câu ngắn, giống nhau mọi lần xảy ra

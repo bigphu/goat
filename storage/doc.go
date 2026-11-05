@@ -1,4 +1,4 @@
-// Package storage lưu file upload và file export: ổ đĩa khi dev, S3 khi production.
+// Package storage lưu file upload và file export. Hiện chỉ có bản ổ đĩa.
 //
 // Service nhận Store (interface), main chọn bản cài đặt:
 //
@@ -6,6 +6,6 @@
 //
 // Key do code tạo từ ID, không lấy tên file người dùng gửi lên:
 //
-//	key := "imports/" + im.ID.String() + "/source.xlsx"
+//	key := "uploads/" + rep.ID.String() + "/source.pdf"
 //	err := store.Put(ctx, key, file)
 package storage

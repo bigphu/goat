@@ -1,6 +1,6 @@
 # `auth`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The error variables use goat's `errs`, with the same types and titles as before. Package comments and permission examples still refer to storeit modules.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The error variables use goat's `errs`.
 
 `auth` keeps the caller (`Actor`) in the request context, reads bearer tokens, and checks permissions.
 
@@ -24,7 +24,7 @@ api.HandlerWithOptions(strict, api.ChiServerOptions{
 Check permissions in the service, so the check holds whether a handler, worker or subscriber calls it:
 
 ```go
-actor, err := auth.Require(ctx, domain.PermAssetCreate) // 401 without an actor, 403 without the permission
+actor, err := auth.Require(ctx, domain.PermOrderCreate) // 401 without an actor, 403 without the permission
 ```
 
 Scheduled jobs run as `SystemActor`, which has every permission and no account:

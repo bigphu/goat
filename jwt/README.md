@@ -1,6 +1,6 @@
 # `jwt`
 
-> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. The `JWT_AUDIENCE` default is still `storeit-api`.
+> **Needs update:** ported from an earlier application and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests.
 
 `jwt` issues and verifies HS256 access tokens, with a key ring for rotation.
 
@@ -47,5 +47,5 @@ Permissions live in the token, so a role change only takes effect when the token
 | `JWT_KEYS_FILE` | required |
 | `JWT_ACTIVE_KID` | required |
 | `JWT_ISSUER` | required |
-| `JWT_AUDIENCE` | storeit-api |
+| `JWT_AUDIENCE` | api |
 | `JWT_ACCESS_TOKEN_TTL` | 15m |

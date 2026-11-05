@@ -6,7 +6,7 @@
 //	slog.SetDefault(logger.New(os.Stdout, cfg.Log))
 //
 //	ctx = logger.With(ctx, slog.String("request_id", id))
-//	slog.InfoContext(ctx, "asset checked out", "asset_id", a.ID)
+//	slog.InfoContext(ctx, "order placed", "order_id", o.ID)
 //
 // Attr chỉ biết được ở bên trong request (actor sau khi verify token) thì thêm
 // bằng AddToScope, để cả log ghi bằng ctx bên ngoài (access log) cũng có:

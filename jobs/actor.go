@@ -15,12 +15,12 @@ import (
 
 // ActorArgs nhúng vào args của job để job chạy dưới tên account đã yêu cầu nó:
 //
-//	type CommitImportArgs struct {
+//	type GenerateReportArgs struct {
 //		jobs.ActorArgs
-//		ImportID uuid.UUID `json:"import_id"`
+//		ReportID uuid.UUID `json:"report_id"`
 //	}
 //
-//	args := CommitImportArgs{ActorArgs: jobs.ActorArgsFrom(ctx), ImportID: im.ID}
+//	args := GenerateReportArgs{ActorArgs: jobs.ActorArgsFrom(ctx), ReportID: rep.ID}
 type ActorArgs struct {
 	// uuid.Nil là SystemActor
 	ActorID uuid.UUID `json:"actor_id"`
@@ -30,8 +30,8 @@ func ActorArgsFrom(ctx context.Context) ActorArgs {
 	return ActorArgs{ActorID: auth.ActorIDFrom(ctx)}
 }
 
-// ActorLoader nạp quyền hiện tại của account. identity cung cấp qua contract,
-// cmd/worker truyền vào worker. Account không còn thì trả lỗi bọc
+// ActorLoader nạp quyền hiện tại của account. Module quản lý account cung cấp,
+// binary worker truyền vào worker. Account không còn thì trả lỗi bọc
 // ErrActorNotFound, để job bị huỷ thay vì retry vô ích.
 type ActorLoader func(ctx context.Context, accountID uuid.UUID) (auth.Actor, error)
 
