@@ -1,0 +1,63 @@
+# --- Binaries & output ---
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/bin/
+/build/
+/dist/
+/out/
+
+# --- Testing & coverage artifacts ---
+*.test
+*.out
+coverage.*
+*.coverprofile
+profile.cov
+/coverage/
+
+# --- Go workspace ---
+go.work
+go.work.sum
+
+# --- Dependency ---
+/vendor/
+
+# --- Environment & secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+/secrets/
+/certs/
+
+# --- Local data & logs ---
+*.log
+/logs/
+/tmp/
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Debugging ---
+__debug_bin*
+*.pprof
+
+# --- Editors & tools ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.claude/
+*.swp
+*.swo
+*~
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+desktop.ini
