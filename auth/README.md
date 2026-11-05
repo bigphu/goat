@@ -1,6 +1,6 @@
 # `auth`
 
-> **Needs update:** ported from storeit. The error variables use goat's `errs`, with the same types and titles as before. Package comments and permission examples still refer to storeit modules.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The error variables use goat's `errs`, with the same types and titles as before. Package comments and permission examples still refer to storeit modules.
 
 `auth` keeps the caller (`Actor`) in the request context, reads bearer tokens, and checks permissions.
 

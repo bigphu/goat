@@ -1,6 +1,6 @@
 # `storage`
 
-> **Needs update:** ported from storeit. The code is unchanged apart from imports. The key examples are storeit's, and the package comment mentions an S3 implementation that doesn't exist.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. The key examples are storeit's, and the package comment mentions an S3 implementation that doesn't exist.
 
 `storage` stores files behind the `Store` interface. `Local`, on disk, is the only implementation.
 

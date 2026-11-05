@@ -1,6 +1,6 @@
 # `database`
 
-> **Needs update:** ported from storeit. The code is unchanged apart from imports. Package comments still use storeit's asset examples.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. Package comments still use storeit's asset examples.
 
 `database` opens the shared Postgres pool (`pgxpool`) and runs transactions.
 

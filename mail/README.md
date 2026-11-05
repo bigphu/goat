@@ -1,6 +1,6 @@
 # `mail`
 
-> **Needs update:** ported from storeit. The code is unchanged apart from imports. Comments and examples still mention `StoreIt`, `@storeit.test` and the `identity` module.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. Comments and examples still mention `StoreIt`, `@storeit.test` and the `identity` module.
 
 `mail` sends email through a transport chosen explicitly with `MAIL_TRANSPORT`: `smtp`, `resend` or `log`. It only handles delivery. The content (templates, links) belongs to the module sending it.
 

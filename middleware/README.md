@@ -1,6 +1,6 @@
 # `middleware`
 
-> **Needs update:** ported from storeit. `ErrRateLimited` uses goat's `errs`, with the same status, type, title and detail as before. This page has not otherwise been reviewed against goat's needs.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. `ErrRateLimited` uses goat's `errs`, with the same status, type, title and detail as before. This page has not otherwise been reviewed against goat's needs.
 
 `middleware` holds the HTTP middleware the toolkit uses. `server.New` installs the shared chain, so most apps only add per-operation overrides.
 

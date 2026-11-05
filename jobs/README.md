@@ -1,6 +1,6 @@
 # `jobs`
 
-> **Needs update:** ported from storeit. The code is unchanged apart from imports. The fixed queues and worker config are storeit's choices, and comments still use storeit's import job and `cmd/api`. Its database-backed tests have not been run in goat yet.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. The fixed queues and worker config are storeit's choices, and comments still use storeit's import job and `cmd/api`. The River client code has never run against Postgres in goat.
 
 `jobs` puts background work on a queue (River on Postgres). Services and repositories see only the `Enqueuer` interface and never import River.
 

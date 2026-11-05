@@ -1,6 +1,6 @@
 # `events`
 
-> **Needs update:** ported from storeit. `events/db/models.go` is sqlc output from storeit's full schema, so it still contains `Identity*` and `Inventory*` models until it is regenerated with the root `sqlc.yml`. Comments still use storeit's modules, `contract` packages and `cmd/api`. Its database-backed tests have not been run in goat yet.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. Comments still use storeit's modules, `contract` packages and `cmd/api`. The outbox and delivery code has never run against Postgres in goat.
 
 `events` sends events between modules through a transactional outbox, with River handling delivery.
 
@@ -64,4 +64,4 @@ events.RegisterWorker(workers, pool, registry, loadActor)       // worker only
 
 ## Schema
 
-The `platform.events` table comes from [`migrations/`](../migrations). It keeps every event after River cleans up the jobs, so events can be replayed for a new subscriber. `events/db` is sqlc output from `events/queries`, so don't edit it by hand. Its `DBTX` interface can be faked to test worker logic without Postgres, as `worker_test.go` does.
+The `platform.events` table comes from [`migrations/`](../migrations). It keeps every event after River cleans up the jobs, so events can be replayed for a new subscriber. `events/db` is sqlc output from `events/queries`, so don't edit it by hand. Regenerate it with `sqlc generate`, using the root `sqlc.yml`. Its `DBTX` interface can be faked to test worker logic without Postgres.

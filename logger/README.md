@@ -1,6 +1,6 @@
 # `logger`
 
-> **Needs update:** ported from storeit. The code is unchanged apart from imports, and this page has not been reviewed against goat's needs.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports, and this page has not been reviewed against goat's needs.
 
 `logger` builds a `*slog.Logger` that writes JSON in production and a pretty format in development, and carries request-scoped attributes in the context.
 

@@ -1,9 +1,10 @@
 # Platform packages: API reference
 
-> **NEEDS UPDATE:** every package here except `errs` was ported from storeit on 2026-11-05,
+> **NEEDS UPDATE:** every package here except `errs` was ported from storeit on 2026-11-05 and is due to be
+> re-implemented by hand,
 > and this file is still storeit's text. In the code, only the import paths and the `errs`
 > calls have changed. When reading the text below, `backend/internal/platform/<pkg>` is now
-> `<pkg>/` and `storeit/internal/platform/<pkg>` is now `goat/<pkg>`. It also mentions storeit
+> `<pkg>/` and `storeit/internal/platform/<pkg>` is now `github.com/bigphu/goat/<pkg>`. It also mentions storeit
 > modules, binaries, compose files and make targets that do not exist in goat. Each package
 > has its own flag; search for `NEEDS UPDATE`, and remove a flag once its section is reviewed.
 > For one package at a time, start with the `README.md` in its folder, written for goat.
@@ -230,11 +231,11 @@ Not ported: goat has its own `errs` with a different API, documented in
 
 ### database/dbtest
 
-> **NEEDS UPDATE** (ported from storeit): now migrates from `goat/migrations`, which holds only the two `platform.events` migrations (renumbered 00001 and 00002). The test database is still named `storeit`, and comments still refer to storeit's `compose.yml` and `cmd/migrate`. Its database-backed tests have not been run in goat.
+> **NEEDS UPDATE** (ported from storeit): migrates from `github.com/bigphu/goat/migrations`, which holds only the two `platform.events` migrations (renumbered 00001 and 00002). The test database is still named `storeit`, and comments still refer to storeit's `compose.yml` and `cmd/migrate`. The tests that used it were removed, so nothing in the repo calls it now, and it has never run in goat.
 
 ### events
 
-> **NEEDS UPDATE** (ported from storeit): `events/db/models.go` is sqlc output from storeit's full schema, so it still contains `Identity*` and `Inventory*` models. Regenerate it with the trimmed root `sqlc.yml` (not done yet). The examples use storeit's `contract` package and aggregates.
+> **NEEDS UPDATE** (ported from storeit): `events/db` is regenerated from goat's own migrations with the root `sqlc.yml`. The examples use storeit's `contract` package and aggregates.
 
 - Emit (in a repository, inside `WithTx`):
   `e, _ := events.New(contract.EventX, "asset", id, payload)` then
@@ -343,11 +344,12 @@ invalid keys give `ErrInvalidKey`. All access goes through `os.Root`.
 
 ### web/apicommon
 
-> **NEEDS UPDATE** (ported from storeit): the source spec is now `api/common.yaml` at the module root, and regenerating from there gives the same output. The schema test now checks the body written by `web.RenderProblem`.
+> **NEEDS UPDATE** (ported from storeit): the source spec is now `api/common.yaml` at the module root, and regenerating from there gives the same output.
 
 ## Testing
 
-> **NEEDS UPDATE:** `make test` and `internal/platform/...` paths are storeit's; goat has no Makefile. Use `go test ./...`.
+> **NEEDS UPDATE:** this section describes storeit's tests. The ported tests were removed from goat
+> ahead of the re-implementation, so goat has no tests yet, and `make test` and `internal/platform/...` are storeit's.
 
 - `go test ./...` (or `make test`). Database-backed tests use `dbtest.Pool(t)`: one
   Postgres container per test binary, goose and River migrations applied, shared

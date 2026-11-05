@@ -1,6 +1,6 @@
 # `web`
 
-> **Needs update:** ported from storeit. It now uses goat's `errs`, which doesn't marshal to JSON, so `problem.go` builds the response body itself. The 500 title changed to `Internal Server Error`. `ErrValidation` keeps the type `/errors/validation-failed`, which differs from `errs.Validation`'s `/errors/validation`. The Swagger page title in `docs.go` is still `StoreIt API`.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. It now uses goat's `errs`, which doesn't marshal to JSON, so `problem.go` builds the response body itself. The 500 title changed to `Internal Server Error`. `ErrValidation` keeps the type `/errors/validation-failed`, which differs from `errs.Validation`'s `/errors/validation`. The Swagger page title in `docs.go` is still `StoreIt API`.
 
 `web` is the shared HTTP layer: problem+json errors, OpenAPI request validation, and JSON helpers for hand-written handlers.
 
@@ -22,7 +22,7 @@ r.Post("/things", web.Handle(func(w http.ResponseWriter, r *http.Request) error 
 
 ### Generated Handlers (oapi-codegen Strict Server)
 
-Your `oapi.yaml` needs `strict-server: true`, `chi-server: true` and `embedded-spec: true`, and an `import-mapping` from your `$ref` to [`api/common.yaml`](../api/common.yaml) onto `goat/web/apicommon`.
+Your `oapi.yaml` needs `strict-server: true`, `chi-server: true` and `embedded-spec: true`, and an `import-mapping` from your `$ref` to [`api/common.yaml`](../api/common.yaml) onto `github.com/bigphu/goat/web/apicommon`.
 
 ```go
 func (h *Handler) Mount(r chi.Router, tokens *jwt.Provider) error {

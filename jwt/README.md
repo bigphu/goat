@@ -1,6 +1,6 @@
 # `jwt`
 
-> **Needs update:** ported from storeit. The code is unchanged apart from imports. The `JWT_AUDIENCE` default is still `storeit-api`.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. The `JWT_AUDIENCE` default is still `storeit-api`.
 
 `jwt` issues and verifies HS256 access tokens, with a key ring for rotation.
 

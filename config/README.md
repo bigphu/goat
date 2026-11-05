@@ -1,6 +1,6 @@
 # `config`
 
-> **Needs update:** ported from storeit. The code is unchanged apart from imports. The `cmd/<binary>/config.go` convention below assumes binaries goat does not have yet.
+> **Needs update:** ported from storeit and due to be re-implemented by hand. The ported tests were removed, so this package currently has no tests. The code is unchanged apart from imports. The `cmd/<binary>/config.go` convention below assumes binaries goat does not have yet.
 
 `config` reads environment variables into a binary's config struct at startup and stops if anything is missing or invalid.
 
